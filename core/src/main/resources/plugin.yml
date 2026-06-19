@@ -1,0 +1,4 @@
+name: ClCore
+version: '1.0-SNAPSHOT'
+main: com.chloride.core.CorePlugin
+api-version: '1.21'

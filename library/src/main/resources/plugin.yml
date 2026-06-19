@@ -1,0 +1,4 @@
+name: ClLibrary
+version: "1.0"
+main: com.chloride.library.LibraryPlugin
+api-version: "1.21"
