@@ -1,0 +1,22 @@
+name: ClModUtilities
+version: "1.0-SNAPSHOT"
+main: com.chloride.modutilities.ModUtilitiesPlugin
+api-version: "1.21"
+softdepend:
+  - ProtocolLib
+  - ProtocolSupport
+  - ViaVersion
+  - ViaBackwards
+  - ViaRewind
+  - Geyser-Spigot
+permissions:
+  clmodutilities.vanish:
+    default: op
+  clmodutilities.staffchat:
+    default: op
+  clmodutilities.inventorysee:
+    default: op
+  clmodutilities.enderchest:
+    default: op
+  clmodutilities.modmode:
+    default: op
