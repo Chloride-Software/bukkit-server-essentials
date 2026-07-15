@@ -13,6 +13,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,17 +36,17 @@ public class Cmd extends Command {
     }
 
     @Override
-    public boolean execute(CommandSender commandSender, String label, String[] args) {
-        if (!PlayerUtil.testPermission(commandSender, this.permission, this.requiresOp)) {
-            commandSender.sendMessage(StringUtil.NO_PERMISSION);
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, String[] args) {
+        if (!PlayerUtil.testPermission(sender, this.permission, this.requiresOp)) {
+            sender.sendMessage(StringUtil.NO_PERMISSION);
             return false;
         }
 
         int i = 0;
         ArrayList<Object> parameters = new ArrayList<>();
-        parameters.add(commandSender);
+        parameters.add(sender);
 
-        StringBuilder usage = new StringBuilder(CC.RED + "Usage: /" + label + " ");
+        StringBuilder usage = new StringBuilder(CC.RED + "Usage: /" + commandLabel + " ");
 
         for (Pair<Parameter<?>, ParamData> paramPair : arguments) {
 
@@ -53,7 +54,7 @@ public class Cmd extends Command {
                 usage.append(CC.RED).append("[").append(paramPair.getValue().getName()).append(CC.RED)
                         .append("] ");
                 parameters
-                        .add(paramPair.getKey().transform(commandSender, StringUtils.join(args, ' ', i, args.length)));
+                        .add(paramPair.getKey().transform(sender, StringUtils.join(args, ' ', i, args.length)));
                 break;
             }
 
@@ -97,7 +98,7 @@ public class Cmd extends Command {
                     continue;
                 }
             }
-            Object object = paramPair.getKey().transform(commandSender, argument);
+            Object object = paramPair.getKey().transform(sender, argument);
             if (object == null) {
                 return true;
             }
@@ -112,16 +113,16 @@ public class Cmd extends Command {
             this.invoke.getKey().invoke(this.invoke.getValue(), parameters.toArray());
             return true;
         } catch (IllegalArgumentException e) {
-            commandSender.sendMessage(
-                    usage + (description.equals("") ? "" : CC.GRAY + ": " + description));
+            sender.sendMessage(
+                    usage + (description.isEmpty() ? "" : CC.GRAY + ": " + description));
             return false;
-        } catch (InvocationTargetException ite) {
-            if (ite.getTargetException() instanceof IllegalArgumentException) {
-                commandSender.sendMessage(
-                        usage + (description.equals("") ? "" : CC.GRAY + ": " + description));
+        } catch (InvocationTargetException e) {
+            if (e.getTargetException() instanceof IllegalArgumentException) {
+                sender.sendMessage(
+                        usage + (description.isEmpty() ? "" : CC.GRAY + ": " + description));
                 return false;
             } else {
-                ite.printStackTrace();
+                e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();

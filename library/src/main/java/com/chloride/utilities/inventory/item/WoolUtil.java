@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public final class WoolUtil {
+    // todo: make sure this works 1.21.11+
 
     private static final Map<ChatColor, Material> WOOL_MATERIALS = new EnumMap<>(ChatColor.class);
 

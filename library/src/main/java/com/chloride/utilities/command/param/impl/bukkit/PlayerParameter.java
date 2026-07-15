@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class PlayerParameter extends Parameter<Player> {
     @Override
     public Player transfer(CommandSender sender, String value) {
-        if (sender instanceof Player && (value.equalsIgnoreCase("self") || value.equals(""))) {
+        if (sender instanceof Player && (value.equalsIgnoreCase("self") || value.isEmpty())) {
             return (Player) sender;
         }
 

@@ -3,6 +3,7 @@ package com.chloride.utilities.server.scoreboard;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -16,86 +17,86 @@ import java.util.Set;
 @Getter
 public class Board {
 
-	private final BoardAdapter adapter;
-	private final Player player;
-	private List<BoardEntry> entries = new ArrayList<>();
-	private Set<BoardTimer> timers = new HashSet<>();
-	private Set<String> keys = new HashSet<>();
-	private Scoreboard scoreboard;
-	private Objective objective;
+    private final BoardAdapter adapter;
+    private final Player player;
+    private final List<BoardEntry> entries = new ArrayList<>();
+    private final Set<BoardTimer> timers = new HashSet<>();
+    private final Set<String> keys = new HashSet<>();
+    private Scoreboard scoreboard;
+    private Objective objective;
 
-	public Board(Player player, BoardAdapter adapter) {
-		this.adapter = adapter;
-		this.player = player;
+    public Board(Player player, BoardAdapter adapter) {
+        this.adapter = adapter;
+        this.player = player;
 
-		this.init();
-	}
+        this.init();
+    }
 
-	private void init() {
-		if (!this.player.getScoreboard()
-				.equals(LibraryPlugin.getInstance().getServer().getScoreboardManager().getMainScoreboard())) {
-			this.scoreboard = this.player.getScoreboard();
-		} else {
-			this.scoreboard = LibraryPlugin.getInstance().getServer().getScoreboardManager().getNewScoreboard();
-		}
+    private void init() {
+        if (!this.player.getScoreboard()
+                .equals(LibraryPlugin.getInstance().getServer().getScoreboardManager().getMainScoreboard())) {
+            this.scoreboard = this.player.getScoreboard();
+        } else {
+            this.scoreboard = LibraryPlugin.getInstance().getServer().getScoreboardManager().getNewScoreboard();
+        }
 
-		this.objective = this.scoreboard.registerNewObjective("Default", "dummy");
-		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        this.objective = this.scoreboard.registerNewObjective("Default", Criteria.DUMMY, "");
+        this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-		this.objective.setDisplayName(this.adapter.getTitle(player));
-	}
+        this.objective.setDisplayName(this.adapter.getTitle(player));
+    }
 
-	public String getNewKey(BoardEntry entry) {
-		for (ChatColor color : ChatColor.values()) {
-			String colorText = color + "" + ChatColor.WHITE;
+    public String getNewKey(BoardEntry entry) {
+        for (ChatColor color : ChatColor.values()) {
+            String colorText = color + "" + ChatColor.WHITE;
 
-			if (entry.getText().length() > 16) {
-				String sub = entry.getText().substring(0, 16);
-				colorText = colorText + ChatColor.getLastColors(sub);
-			}
+            if (entry.getText().length() > 16) {
+                String sub = entry.getText().substring(0, 16);
+                colorText = colorText + ChatColor.getLastColors(sub);
+            }
 
-			if (!keys.contains(colorText)) {
-				keys.add(colorText);
-				return colorText;
-			}
-		}
+            if (!keys.contains(colorText)) {
+                keys.add(colorText);
+                return colorText;
+            }
+        }
 
-		throw new IndexOutOfBoundsException("No more keys available!");
-	}
+        throw new IndexOutOfBoundsException("No more keys available!");
+    }
 
-	public List<String> getBoardEntriesFormatted() {
-		List<String> toReturn = new ArrayList<>();
+    public List<String> getBoardEntriesFormatted() {
+        List<String> toReturn = new ArrayList<>();
 
-		for (BoardEntry entry : new ArrayList<>(entries)) {
-			toReturn.add(entry.getText());
-		}
+        for (BoardEntry entry : new ArrayList<>(entries)) {
+            toReturn.add(entry.getText());
+        }
 
-		return toReturn;
-	}
+        return toReturn;
+    }
 
-	public BoardEntry getByPosition(int position) {
-		for (int i = 0; i < this.entries.size(); i++) {
-			if (i == position) {
-				return this.entries.get(i);
-			}
-		}
+    public BoardEntry getByPosition(int position) {
+        for (int i = 0; i < this.entries.size(); i++) {
+            if (i == position) {
+                return this.entries.get(i);
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public BoardTimer getCooldown(String id) {
-		for (BoardTimer cooldown : getTimers()) {
-			if (cooldown.getId().equals(id)) {
-				return cooldown;
-			}
-		}
+    public BoardTimer getCooldown(String id) {
+        for (BoardTimer cooldown : getTimers()) {
+            if (cooldown.getId().equals(id)) {
+                return cooldown;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public Set<BoardTimer> getTimers() {
-		this.timers.removeIf(cooldown -> System.currentTimeMillis() >= cooldown.getEnd());
-		return this.timers;
-	}
+    public Set<BoardTimer> getTimers() {
+        this.timers.removeIf(cooldown -> System.currentTimeMillis() >= cooldown.getEnd());
+        return this.timers;
+    }
 
 }

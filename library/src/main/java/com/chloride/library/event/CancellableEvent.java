@@ -8,6 +8,6 @@ import org.bukkit.event.Cancellable;
 @Setter
 public class CancellableEvent extends BaseEvent implements Cancellable {
 
-	private boolean cancelled;
+    private boolean cancelled;
 
 }

@@ -4,6 +4,5 @@ import com.chloride.utilities.inventory.InventoryUI;
 import org.bukkit.entity.Player;
 
 public interface SettingsHandler {
-
-	void onCreateSettings(InventoryUI inventoryUI, Player player);
+    void onCreateSettings(InventoryUI inventoryUI, Player player);
 }

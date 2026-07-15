@@ -10,11 +10,11 @@ import org.bukkit.event.Cancellable;
 @Setter
 public class BungeeConnectEvent extends PlayerEvent implements Cancellable {
 
-	private boolean cancelled;
-	private String server;
+    private boolean cancelled;
+    private String server;
 
-	public BungeeConnectEvent(Player player, String server) {
-		super(player);
-		this.server = server;
-	}
+    public BungeeConnectEvent(Player player, String server) {
+        super(player);
+        this.server = server;
+    }
 }

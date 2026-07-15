@@ -30,7 +30,7 @@ import java.util.*;
 public class CommandManager {
 
     @Getter
-    private final Map<Class, Parameter<?>> parameterMap = new HashMap<>();
+    private final Map<Class<?>, Parameter<?>> parameterMap = new HashMap<>();
     private final Map<String, String> baseCommandMap = new HashMap<>();
     private CommandMap commandMap;
 
@@ -52,10 +52,9 @@ public class CommandManager {
         registerParameter(World.class, new WorldParameter());
     }
 
-    public void registerParameter(Class clazz, Parameter<?> parameter) {
+    public void registerParameter(Class<?> clazz, Parameter<?> parameter) {
         parameterMap.put(clazz, parameter);
     }
-
 
     public void registerAllClasses(Collection<CommandHandler> classes) {
         for (CommandHandler commandHandler : classes) {

@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface BoardAdapter {
 
-	List<String> getScoreboard(Player player, Board board);
+    List<String> getScoreboard(Player player, Board board);
 
-	String getTitle(Player player);
+    String getTitle(Player player);
 
-	long getInterval();
+    long getInterval();
 
-	void onScoreboardCreate(Player player, Scoreboard board);
+    void onScoreboardCreate(Player player, Scoreboard board);
 
-	void preLoop();
+    void preLoop();
 
 }

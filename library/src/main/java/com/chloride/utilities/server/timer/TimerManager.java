@@ -11,33 +11,33 @@ import java.util.Set;
 @Data
 public class TimerManager implements Listener {
 
-	@Getter
-	private final Set<Timer> timers = new LinkedHashSet<>();
+    @Getter
+    private final Set<Timer> timers = new LinkedHashSet<>();
 
-	private final JavaPlugin plugin;
+    private final JavaPlugin plugin;
 
-	public TimerManager(JavaPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TimerManager(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void registerTimer(Timer timer) {
-		this.timers.add(timer);
-		if (timer instanceof Listener) {
-			this.plugin.getServer().getPluginManager().registerEvents((Listener) timer, this.plugin);
-		}
-	}
+    public void registerTimer(Timer timer) {
+        this.timers.add(timer);
+        if (timer instanceof Listener) {
+            this.plugin.getServer().getPluginManager().registerEvents((Listener) timer, this.plugin);
+        }
+    }
 
-	public void unregisterTimer(Timer timer) {
-		this.timers.remove(timer);
-	}
+    public void unregisterTimer(Timer timer) {
+        this.timers.remove(timer);
+    }
 
-	public <T extends Timer> T getTimer(Class<T> timerClass) {
-		for (Timer timer : this.timers) {
-			if (timer.getClass().equals(timerClass)) {
-				return (T) timer;
-			}
-		}
+    public <T extends Timer> T getTimer(Class<T> timerClass) {
+        for (Timer timer : this.timers) {
+            if (timer.getClass().equals(timerClass)) {
+                return (T) timer;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

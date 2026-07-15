@@ -10,12 +10,11 @@ import java.util.Set;
 @Getter
 @RequiredArgsConstructor
 public class SettingsManager {
+    private final Set<SettingsHandler> settingsHandlers = new HashSet<>();
 
-	private final Set<SettingsHandler> settingsHandlers = new HashSet<>();
+    private final LibraryPlugin plugin;
 
-	private final LibraryPlugin plugin;
-
-	public void addSettingsHandler(SettingsHandler settingsHandler) {
-		this.settingsHandlers.add(settingsHandler);
-	}
+    public void addSettingsHandler(SettingsHandler settingsHandler) {
+        this.settingsHandlers.add(settingsHandler);
+    }
 }

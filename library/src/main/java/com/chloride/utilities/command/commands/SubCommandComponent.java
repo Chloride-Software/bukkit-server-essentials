@@ -109,7 +109,7 @@ public class SubCommandComponent {
             this.invoke.getKey().setAccessible(true);
             this.invoke.getKey().invoke(this.invoke.getValue(), parameters.toArray());
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(usage + (description.equals("") ? "" : CC.GRAY + ": " + description));
+            sender.sendMessage(usage + (description.isEmpty() ? "" : CC.GRAY + ": " + description));
         } catch (Exception e) {
             e.printStackTrace();
         }

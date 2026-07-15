@@ -15,107 +15,107 @@ import java.util.List;
 
 public class ItemBuilder implements Listener {
 
-	private final ItemStack itemStack;
+    private final ItemStack itemStack;
 
-	public ItemBuilder(final Material mat) {
-		itemStack = new ItemStack(mat);
-	}
+    public ItemBuilder(final Material mat) {
+        itemStack = new ItemStack(mat);
+    }
 
-	public ItemBuilder(final ItemStack itemStack) {
-		this.itemStack = itemStack;
-	}
+    public ItemBuilder(final ItemStack itemStack) {
+        this.itemStack = itemStack;
+    }
 
-	public ItemBuilder amount(final int amount) {
-		this.itemStack.setAmount(amount);
-		return this;
-	}
+    public ItemBuilder amount(final int amount) {
+        this.itemStack.setAmount(amount);
+        return this;
+    }
 
-	public ItemBuilder name(final String name) {
-		final ItemMeta meta = this.itemStack.getItemMeta();
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-		this.itemStack.setItemMeta(meta);
-		return this;
-	}
+    public ItemBuilder name(final String name) {
+        final ItemMeta meta = this.itemStack.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        this.itemStack.setItemMeta(meta);
+        return this;
+    }
 
-	public ItemBuilder lore(final String name) {
-		final ItemMeta meta = this.itemStack.getItemMeta();
-		List<String> lore = meta.getLore();
-		if (lore == null) {
-			lore = new ArrayList<>();
-		}
+    public ItemBuilder lore(final String name) {
+        final ItemMeta meta = this.itemStack.getItemMeta();
+        List<String> lore = meta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
         lore.add(ChatColor.translateAlternateColorCodes('&', name));
-		meta.setLore(lore);
-		this.itemStack.setItemMeta(meta);
-		return this;
-	}
+        meta.setLore(lore);
+        this.itemStack.setItemMeta(meta);
+        return this;
+    }
 
-	public ItemBuilder lore(final List<String> lore) {
-		List<String> toSet = new ArrayList<>();
-		ItemMeta meta = this.itemStack.getItemMeta();
+    public ItemBuilder lore(final List<String> lore) {
+        List<String> toSet = new ArrayList<>();
+        ItemMeta meta = this.itemStack.getItemMeta();
 
-		for (String string : lore) {
-			toSet.add(ChatColor.translateAlternateColorCodes('&', string));
-		}
+        for (String string : lore) {
+            toSet.add(ChatColor.translateAlternateColorCodes('&', string));
+        }
 
-		meta.setLore(toSet);
-		this.itemStack.setItemMeta(meta);
-		return this;
-	}
+        meta.setLore(toSet);
+        this.itemStack.setItemMeta(meta);
+        return this;
+    }
 
-	public ItemBuilder durability(final int durability) {
-		this.itemStack.setDurability((short) durability);
-		return this;
-	}
+    public ItemBuilder durability(final int durability) {
+        this.itemStack.setDurability((short) durability);
+        return this;
+    }
 
-	@SuppressWarnings("deprecation")
-	public ItemBuilder data(final int data) {
-		this.itemStack.setData(new MaterialData(this.itemStack.getType(), (byte) data));
-		return this;
-	}
+    @SuppressWarnings("deprecation")
+    public ItemBuilder data(final int data) {
+        this.itemStack.setData(new MaterialData(this.itemStack.getType(), (byte) data));
+        return this;
+    }
 
-	public ItemBuilder enchantment(final Enchantment enchantment, final int level) {
-		this.itemStack.addUnsafeEnchantment(enchantment, level);
-		return this;
-	}
+    public ItemBuilder enchantment(final Enchantment enchantment, final int level) {
+        this.itemStack.addUnsafeEnchantment(enchantment, level);
+        return this;
+    }
 
-	public ItemBuilder enchantment(final Enchantment enchantment) {
-		this.itemStack.addUnsafeEnchantment(enchantment, 1);
-		return this;
-	}
+    public ItemBuilder enchantment(final Enchantment enchantment) {
+        this.itemStack.addUnsafeEnchantment(enchantment, 1);
+        return this;
+    }
 
-	public ItemBuilder type(final Material material) {
-		this.itemStack.setType(material);
-		return this;
-	}
+    public ItemBuilder type(final Material material) {
+        this.itemStack.setType(material);
+        return this;
+    }
 
-	public ItemBuilder clearLore() {
-		final ItemMeta meta = this.itemStack.getItemMeta();
-		meta.setLore(new ArrayList<String>());
-		this.itemStack.setItemMeta(meta);
-		return this;
-	}
+    public ItemBuilder clearLore() {
+        final ItemMeta meta = this.itemStack.getItemMeta();
+        meta.setLore(new ArrayList<String>());
+        this.itemStack.setItemMeta(meta);
+        return this;
+    }
 
-	public ItemBuilder clearEnchantments() {
-		for (final Enchantment e : this.itemStack.getEnchantments().keySet()) {
-			this.itemStack.removeEnchantment(e);
-		}
-		return this;
-	}
+    public ItemBuilder clearEnchantments() {
+        for (final Enchantment e : this.itemStack.getEnchantments().keySet()) {
+            this.itemStack.removeEnchantment(e);
+        }
+        return this;
+    }
 
-	public ItemBuilder color(Color color) {
-		if (this.itemStack.getType() == Material.LEATHER_BOOTS || this.itemStack.getType() == Material.LEATHER_CHESTPLATE || this.itemStack.getType() == Material.LEATHER_HELMET
-				|| this.itemStack.getType() == Material.LEATHER_LEGGINGS) {
-			LeatherArmorMeta meta = (LeatherArmorMeta) this.itemStack.getItemMeta();
-			meta.setColor(color);
-			this.itemStack.setItemMeta(meta);
-			return this;
-		} else {
-			throw new IllegalArgumentException("color() only applicable for leather armor!");
-		}
-	}
+    public ItemBuilder color(Color color) {
+        if (this.itemStack.getType() == Material.LEATHER_BOOTS || this.itemStack.getType() == Material.LEATHER_CHESTPLATE || this.itemStack.getType() == Material.LEATHER_HELMET
+                || this.itemStack.getType() == Material.LEATHER_LEGGINGS) {
+            LeatherArmorMeta meta = (LeatherArmorMeta) this.itemStack.getItemMeta();
+            meta.setColor(color);
+            this.itemStack.setItemMeta(meta);
+            return this;
+        } else {
+            throw new IllegalArgumentException("color() only applicable for leather armor!");
+        }
+    }
 
-	public ItemStack build() {
-		return itemStack;
-	}
+    public ItemStack build() {
+        return itemStack;
+    }
 
 }
